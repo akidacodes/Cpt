@@ -1,9 +1,9 @@
-# This is the title of the README (The app name)
-Description of the project maybe?
+# This is the title of the README (Globistry)
+Description of the project.
 
-1. List of things
-2. Another one 
-3. Another one
+1. List of countries and thier flight budget
+2. Type of traveler (Business or Leisure)
+3. Places to visit in the country
 
 - Bullet points
 - more of them
