@@ -5,8 +5,9 @@ Description of the project.
 2. Type of traveler (Business or Leisure)
 3. Places to visit in the country
 
-- Bullet points
-- more of them
+- Actvities to do in the country
+- Restaurants to go to
+- Converting your preferred currency to the currency of the country you'll be travelling to
 
 ```java
 public static void main (String[] args){
