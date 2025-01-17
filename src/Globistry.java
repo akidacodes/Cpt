@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * author: Omar Akida
+ * date: 17/01/2025
+ * Globistry
+ */
 public class Globistry {
 
     public static void main(String[] args) {
