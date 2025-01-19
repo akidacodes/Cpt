@@ -11,10 +11,18 @@ import java.util.Scanner;
  */
 public class Globistry {
 
+    /**
+     * The main entry point of the Globistry program.
+     * <p>
+     * Prompts the user to enter their name, traveler type, displays a list of 
+     * affordable countries based on budget, and allows selection of country, city, 
+     * and activities. Finally, it handles currency conversions.
+     * </p>
+     *
+     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
 
-        
         System.out.println("Please enter your name: ");
         String name = input.nextLine();
         System.out.println(name + ", welcome to Globistry!");
@@ -23,19 +31,16 @@ public class Globistry {
         String travelerType = input.nextLine().trim();
         handleTravelerType(name, travelerType, input);
 
-        
         System.out.println("What's your flight budget?");
         double flightBudget = input.nextDouble();
         input.nextLine();
 
-        // Initializing the countrybudgets
+        // Initializing the country budgets
         List<CountryBudget> countryBudgets = initializeCountryBudgets();
         Traveler traveler = createTraveler(name, travelerType, flightBudget);
 
-        
         showAffordableCountries(countryBudgets, flightBudget);
 
-        
         System.out.println("Enter which country you'd prefer traveling to: ");
         String preferredCountry = input.nextLine().trim().toLowerCase();
         System.out.println("You have chosen to travel to " + preferredCountry + ".");
@@ -60,7 +65,14 @@ public class Globistry {
         input.close();
     }
 
-    // A method to handle the traveler type and ask certain questions to determine the traveler type
+    /**
+     * Determines the type of traveler (Business or Leisure) and prompts
+     * for additional details if the traveler is a Business traveler.
+     *
+     * @param name         the traveler's name
+     * @param travelerType the user's traveler type input (Business/Leisure)
+     * @param input        a Scanner for reading user input
+     */
     public static void handleTravelerType(String name, String travelerType, Scanner input) {
         if (travelerType.equalsIgnoreCase("Business") || travelerType.equalsIgnoreCase("B")) {
             System.out.println(name + " you are a Business Traveler.");
@@ -80,10 +92,16 @@ public class Globistry {
         }
     }
 
-   // A method used to set up the data structure for each country including the cities and restaurants available
-    
+    /**
+     * Creates a nested map of countries, their cities, and the restaurants in each city.
+     * <p>
+     * The returned structure is:
+     * <code>{ country -> { city -> [restaurant names] } }</code>
+     * </p>
+     *
+     * @return a map of restaurant data keyed by country and city
+     */
     public static Map<String, Map<String, List<String>>> createRestaurantsMap() {
-        
         Map<String, Map<String, List<String>>> restaurantsMap = new HashMap<>();
 
         Map<String, List<String>> moroccoCities = new HashMap<>();
@@ -115,8 +133,12 @@ public class Globistry {
         return restaurantsMap;
     }
 
-    
-    // A method used to initialize the country budgets
+    /**
+     * Initializes and returns a list of country budgets, each containing:
+     * country name, flight budget, and currency code.
+     *
+     * @return a list of {@link CountryBudget} objects
+     */
     public static List<CountryBudget> initializeCountryBudgets() {
         return List.of(
             new CountryBudget("Morocco", 850, "MAD"),
@@ -127,7 +149,15 @@ public class Globistry {
         );
     }
 
-    // A method to decide which type of traveler is the person whether using b for business or l for leisure
+    /**
+     * Creates a {@link Traveler} instance (either {@link BusinessTraveler} or {@link LeisureTraveler})
+     * based on the traveler's type input.
+     *
+     * @param name         the traveler's name
+     * @param travelerType the traveler's type (Business/Leisure)
+     * @param budget       the traveler's flight budget
+     * @return a {@link Traveler} object (either Business or Leisure)
+     */
     public static Traveler createTraveler(String name, String travelerType, double budget) {
         if (travelerType.equalsIgnoreCase("Business") || travelerType.equalsIgnoreCase("B")) {
             return new BusinessTraveler(name, budget);
@@ -135,8 +165,14 @@ public class Globistry {
             return new LeisureTraveler(name, budget);
         }
     }
-    
-    // A method created to show the affordable countries based on the person's flight budget
+
+    /**
+     * Displays the list of countries whose flight cost is within the user's budget.
+     * If no countries are found, terminates the program.
+     *
+     * @param countryBudgets a list of {@link CountryBudget} objects
+     * @param budget         the user's flight budget
+     */
     public static void showAffordableCountries(List<CountryBudget> countryBudgets, double budget) {
         System.out.println("Based on your flight budget, you can travel to the following countries:");
         boolean found = false;
@@ -152,7 +188,14 @@ public class Globistry {
         }
     }
 
-    // Ai used -> ChatGPT, Prompt -> "Add city selection handling"
+    /**
+     * Handles city selection within the chosen country, displays the restaurants in that city,
+     * and asks the user for their lodging choice.
+     *
+     * @param preferredCountry the name of the country chosen by the user
+     * @param restaurantsMap   a map of countries -> cities -> restaurant names
+     * @param input            a Scanner for user input
+     */
     public static void handleCitySelection(String preferredCountry,
                                            Map<String, Map<String, List<String>>> restaurantsMap,
                                            Scanner input) {
@@ -179,7 +222,11 @@ public class Globistry {
         }
     }
 
-    // A method to initialize the adventure map with the activities in each country and city
+    /**
+     * Initializes the adventure map with activities specific to each country.
+     *
+     * @return an {@link AdventureMap} containing a list of activities keyed by country
+     */
     public static AdventureMap initializeAdventureMap() {
         AdventureMap map = new AdventureMap();
         map.addActivity("morocco", "Desert Safari, Sahara");
@@ -190,7 +237,14 @@ public class Globistry {
         return map;
     }
 
-    // Ai used -> ChatGPT, Prompt -> "Add activity selection handling to deal with the correct corresponding number to the activity listed"
+    /**
+     * Presents the user with a list of activities for the chosen country
+     * and allows the user to select one by its corresponding number.
+     *
+     * @param preferredCountry the country chosen by the user
+     * @param adventureMap     an {@link AdventureMap} storing country-activity mappings
+     * @param input            a Scanner for user input
+     */
     public static void handleActivitySelection(String preferredCountry,
                                                AdventureMap adventureMap,
                                                Scanner input) {
@@ -212,7 +266,14 @@ public class Globistry {
         }
     }
 
-    // A method used to handle accurate currency coversions based on the person's preferred currency and their budget to spend in that country
+    /**
+     * Handles currency conversion from the user's preferred currency to the
+     * destination country's currency, then prints the converted budget.
+     *
+     * @param preferredCountry the country the user has chosen
+     * @param countryBudgets   a list of {@link CountryBudget} objects
+     * @param input            a Scanner for user input
+     */
     public static void handleCurrencyConversion(String preferredCountry,
                                                 List<CountryBudget> countryBudgets,
                                                 Scanner input) {
@@ -235,7 +296,13 @@ public class Globistry {
         }
     }
 
-    // Ai used: ChatGPT, Prompt -> "Provide example mock currency rates"
+    /**
+     * Provides a mock exchange rate between two currencies for demonstration purposes.
+     *
+     * @param fromCurrency the 3-letter currency code converting from
+     * @param toCurrency   the 3-letter currency code converting to
+     * @return the exchange rate (toCurrency / fromCurrency)
+     */
     public static double getExchangeRate(String fromCurrency, String toCurrency) {
         Map<String, Double> exchangeRates = Map.of(
             "USD", 1.0,
@@ -249,12 +316,19 @@ public class Globistry {
         return toRate / fromRate;
     }
 
-    // A method used to include a list of restaurants in cities in morocco, other countries are included in the restaurant map
+    /**
+     * Initializes a list of {@link Restaurant} objects for the specified city.
+     * <p>
+     * Currently supports only Moroccan cities in this example.
+     * </p>
+     *
+     * @param city the city name
+     * @return a list of restaurants available in that city
+     */
     public static List<Restaurant> initializeRestaurants(String city) {
         List<Restaurant> restaurants = new ArrayList<>();
         switch (city.toLowerCase()) {
             case "marrakech":
-                
                 restaurants.add(new Restaurant("Pepe Nero", "Fusion of moroccan and italian cuisine"));
                 restaurants.add(new Restaurant("Dar Yacout", "Traditional cuisine"));
                 restaurants.add(new Restaurant("Café Clock", "Live music and cultural events"));
@@ -278,89 +352,180 @@ public class Globistry {
     }
 }
 
+/**
+ * Represents the budget information for traveling to a specific country,
+ * including flight budget and currency code.
+ */
 class CountryBudget {
     private final String countryName;
     private final double flightBudget;
     private final String currencyCode;
 
+    /**
+     * Constructs a {@code CountryBudget} instance.
+     *
+     * @param countryName  the name of the country
+     * @param flightBudget the required flight budget for this country
+     * @param currencyCode the ISO currency code for the country's currency
+     */
     public CountryBudget(String countryName, double flightBudget, String currencyCode) {
         this.countryName = countryName;
         this.flightBudget = flightBudget;
         this.currencyCode = currencyCode;
     }
 
+    /**
+     * @return the name of the country
+     */
     public String getCountryName() {
         return countryName;
     }
 
+    /**
+     * @return the flight budget for this country
+     */
     public double getFlightBudget() {
         return flightBudget;
     }
 
+    /**
+     * @return the ISO currency code (e.g., 'MAD', 'JPY', 'EGP') for this country
+     */
     public String getCurrencyCode() {
         return currencyCode;
     }
 }
 
+/**
+ * A generic traveler with a specified name and budget.
+ */
 class Traveler {
     private final String name;
     private final double budget;
 
+    /**
+     * Constructs a {@code Traveler} object.
+     *
+     * @param name   the traveler's name
+     * @param budget the traveler's budget
+     */
     public Traveler(String name, double budget) {
         this.name = name;
         this.budget = budget;
     }
 
+    /**
+     * @return the traveler's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return the traveler's budget
+     */
     public double getBudget() {
         return budget;
     }
 }
 
+/**
+ * A traveler who travels for business purposes.
+ */
 class BusinessTraveler extends Traveler {
+
+    /**
+     * Constructs a {@code BusinessTraveler} object.
+     *
+     * @param name   the traveler's name
+     * @param budget the traveler's budget
+     */
     public BusinessTraveler(String name, double budget) {
         super(name, budget);
     }
 }
 
+/**
+ * A traveler who travels for leisure purposes.
+ */
 class LeisureTraveler extends Traveler {
+
+    /**
+     * Constructs a {@code LeisureTraveler} object.
+     *
+     * @param name   the traveler's name
+     * @param budget the traveler's budget
+     */
     public LeisureTraveler(String name, double budget) {
         super(name, budget);
     }
 }
 
+/**
+ * A mapping of countries to a list of activities available in each country.
+ */
 class AdventureMap {
     private final Map<String, List<String>> activitiesMap = new HashMap<>();
 
+    /**
+     * Adds an activity for the specified country.
+     *
+     * @param country  the country to add the activity to
+     * @param activity a description of the activity
+     */
     public void addActivity(String country, String activity) {
         activitiesMap.computeIfAbsent(country, k -> new ArrayList<>()).add(activity);
     }
 
+    /**
+     * Checks if a given country has any associated activities.
+     *
+     * @param country the country to check
+     * @return {@code true} if the country has one or more activities, otherwise {@code false}
+     */
     public boolean hasActivities(String country) {
         return activitiesMap.containsKey(country) && !activitiesMap.get(country).isEmpty();
     }
 
+    /**
+     * Retrieves the list of activities for the specified country.
+     *
+     * @param country the country for which to retrieve activities
+     * @return a list of activity descriptions, or an empty list if none exist
+     */
     public List<String> getActivities(String country) {
         return activitiesMap.getOrDefault(country, new ArrayList<>());
     }
 }
 
+/**
+ * Represents a restaurant with a name and notable pros/attributes.
+ */
 class Restaurant {
     private final String name;
     private final String pros;
 
+    /**
+     * Constructs a {@code Restaurant} object.
+     *
+     * @param name the name of the restaurant
+     * @param pros a short description of the restaurant's highlights
+     */
     public Restaurant(String name, String pros) {
         this.name = name;
         this.pros = pros;
     }
 
+    /**
+     * @return the restaurant's name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @return a short description of the restaurant's positive features
+     */
     public String getPros() {
         return pros;
     }
