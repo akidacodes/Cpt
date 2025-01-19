@@ -12,13 +12,14 @@ import java.util.Scanner;
 public class Globistry {
 
     /**
-     * The main entry point of the Globistry program.
+     * The main entry point of the Globistry application.
      * <p>
-     * Prompts the user to enter their name, traveler type, displays a list of 
+     * Prompts the user to enter their name and traveler type, displays a list of 
      * affordable countries based on budget, and allows selection of country, city, 
-     * and activities. Finally, it handles currency conversions.
+     * and activities. Finally, handles currency conversions.
      * </p>
      *
+     * @param args command-line arguments (not used)
      */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
@@ -188,6 +189,7 @@ public class Globistry {
         }
     }
 
+    // Ai used -> ChatGPT, Prompt -> "Add city selection handling"
     /**
      * Handles city selection within the chosen country, displays the restaurants in that city,
      * and asks the user for their lodging choice.
@@ -237,6 +239,7 @@ public class Globistry {
         return map;
     }
 
+    // Ai used -> ChatGPT, Prompt -> "Add activity selection handling to deal with the correct corresponding number to the activity listed"
     /**
      * Presents the user with a list of activities for the chosen country
      * and allows the user to select one by its corresponding number.
@@ -296,6 +299,7 @@ public class Globistry {
         }
     }
 
+    // Ai used: ChatGPT, Prompt -> "Provide example mock currency rates"
     /**
      * Provides a mock exchange rate between two currencies for demonstration purposes.
      *
